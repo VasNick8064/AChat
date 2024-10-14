@@ -5,10 +5,12 @@ from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 from app.models import Message
+from database.shemas import conn
 
 achat = FastAPI(
     title="AChat",
     version="0.0.1")
+
 achat.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory='templates')

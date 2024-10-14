@@ -1,4 +1,4 @@
-# from sqlalchemy import Column, Integer, String, Boolean
+
 from sqlalchemy.ext.declarative import declarative_base
 from pydantic import BaseModel, StringConstraints
 from typing_extensions import Annotated
