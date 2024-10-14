@@ -14,7 +14,7 @@ achat.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory='templates')
 
 
-@achat.get("/", response_class=HTMLResponse)
+@achat.get("/chat", response_class=HTMLResponse)
 async def get_started(request: Request):
     return templates.TemplateResponse("chat.html", {"request": request})
 
@@ -22,3 +22,8 @@ async def get_started(request: Request):
 @achat.post("/sm")
 async def send_message(request: Request, message: Message = Form(...)):
     return templates.TemplateResponse("chat.html", {"request": request})
+
+
+@achat.get("/", response_class=HTMLResponse)
+async def get_started(request: Request):
+    return templates.TemplateResponse("welcome.html", {"request": request})

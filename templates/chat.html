@@ -84,6 +84,40 @@
             height: auto; /* Maintain aspect ratio */
         }
 
+        /* User icon and dropdown styles */
+        .user-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            width: 40px; /* Smaller size for user icon */
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .dropdown a {
+          display:block;
+          padding:10px;
+          color:#333;
+          text-decoration:none;
+          text-align:center;
+          opacity: 0; /* Start hidden for animation */
+          transform: translateY(-10px); /* Start slightly above */
+          transition: opacity 0.3s ease, transform 0.3s ease; /* Animation for dropdown items */
+        }
+
+        .dropdown a:hover {
+          background-color:#f0f0f0;
+        }
+
         /* Animation for chat title on hover */
         .chat-title:hover span {
           transform: translateX(2px); /* Slightly move letters to the right on hover */
@@ -102,6 +136,14 @@
         <span>h</span>
         <span>a</span>
         <span>t</span>
+    </div>
+
+    <!-- User Icon -->
+    <img src="static/user.png" alt="User Icon" class="user-icon" id="userIcon">
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown" id="dropdownMenu">
+      <a href="#" id="logoutButton">Выйти</a>
     </div>
 
     <div class="chat-container">
@@ -139,6 +181,41 @@
               sendButton.style.display = "none"; // Скрываем кнопку
           }
       }
+
+      // Toggle dropdown menu
+      const userIcon = document.getElementById('userIcon');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+
+      userIcon.addEventListener('click', function() {
+          dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+
+          // Animate dropdown items
+          const links = dropdownMenu.querySelectorAll('a');
+          links.forEach((link, index) => {
+              link.style.opacity = '1'; // Show link
+              link.style.transform = 'translateY(0)'; // Move to original position
+              link.style.transitionDelay = `${index * 50}ms`; // Staggered animation
+          });
+      });
+
+      // Logout functionality
+      document.getElementById('logoutButton').addEventListener('click', function(e) {
+          e.preventDefault();
+          alert('Вы вышли из аккаунта!'); // Replace this with actual logout logic
+          dropdownMenu.style.display = 'none'; // Hide dropdown after logout
+      });
+
+      // Close dropdown when clicking outside of it
+      window.addEventListener('click', function(event) {
+          if (!event.target.matches('.user-icon')) {
+              dropdownMenu.style.display = 'none';
+              const links = dropdownMenu.querySelectorAll('a');
+              links.forEach(link => {
+                  link.style.opacity = '0'; // Hide link
+                  link.style.transform = 'translateY(-10px)'; // Move above
+              });
+          }
+      });
     </script>
 
 </body>

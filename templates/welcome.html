@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet"> <!-- Import Leckerli One font -->
+    <title>Registration / Login - AChat</title>
+    <style>
+        body {
+            font-family: 'Leckerli One', cursive; /* Apply Leckerli One font */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            color: #333;
+            align-items: center; /* Center items horizontally */
+        }
+
+        .auth-title {
+            text-align: center; /* Center the title */
+            font-size: 40px; /* Increased font size */
+            font-weight: bold;
+            color: #209CEE; /* Match the overall color scheme */
+            margin-top: 20px; /* Add some space at the top */
+        }
+
+        .auth-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px; /* Space above the container */
+            width: 300px; /* Set a fixed width for the form */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center items horizontally */
+        }
+
+        .input-field {
+            width: 100%; /* Full width */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Space between fields */
+        }
+
+        .auth-button {
+            padding: 10px 20px;
+            background-color: #209CEE; /* Цвет кнопки отправки */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .auth-button:hover {
+            background-color: #007bff; /* Темнее при наведении */
+        }
+
+        .toggle-link {
+            text-align: center; /* Center the link */
+            margin-top: 10px; /* Space above the link */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-title" id="registrationTitle">Sign up</div>
+
+    <div class="auth-container" id="authContainer">
+        <input type="text" class="input-field" id="username" placeholder="Имя пользователя" required>
+        <input type="password" class="input-field" id="password" placeholder="Пароль" required>
+        <button class="auth-button" id="registerButton">Sign up</button>
+
+        <div class="toggle-link">
+          <a href="#" id="toggleLink" style="color:#209CEE;">I have an account</a>
+        </div>
+    </div>
+
+    <!-- Login Form (initially hidden) -->
+    <div class="auth-container" id="loginContainer" style="display:none;">
+        <input type="text" class="input-field" id="loginUsername" placeholder="Имя пользователя" required>
+        <input type="password" class="input-field" id="loginPassword" placeholder="Пароль" required>
+        <button class="auth-button" id="loginButton">Login</button>
+
+        <div class="toggle-link">
+          <a href="#" id="backToRegisterLink" style="color:#209CEE;">No account? Sign up!</a>
+        </div>
+    </div>
+
+    <!-- Use CDN for GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+      // Animate the registration title
+      gsap.from("#registrationTitle", {
+          opacity: 0,
+          y: -10,
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power2.inOut"
+      });
+
+      gsap.from("#authContainer", {
+          opacity: 0,
+          y: -10,
+          duration: 0.5,
+          delay: 0.4,
+          ease: "power2.inOut"
+      });
+
+      document.getElementById('toggleLink').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('authContainer').style.display = 'none'; // Hide registration
+          document.getElementById('loginContainer').style.display = 'flex'; // Show login
+          document.getElementById("registrationTitle").innerText = "Login"; // Change title to Login
+      });
+
+      document.getElementById('backToRegisterLink').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('loginContainer').style.display = 'none'; // Hide login
+          document.getElementById('authContainer').style.display = 'flex'; // Show registration
+          document.getElementById("registrationTitle").innerText = "Sign UP"; // Change title back to Registration
+      });
+
+      document.getElementById('registerButton').addEventListener('click', function() {
+          // Logic for registration can be added here
+          alert('Registration logic goes here!');
+      });
+
+      document.getElementById('loginButton').addEventListener('click', function() {
+          // Logic for login can be added here
+          alert('Login logic goes here!');
+      });
+    </script>
+
+</body>
+</html>
