@@ -67,7 +67,6 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            display: none; /* Скрыть кнопку по умолчанию */
         }
 
         .send-button:hover {
@@ -152,9 +151,12 @@
 
     <!-- Input container for message input -->
     <div class="input-container">
-        <div class="attach-icon" title="Прикрепить файл">
-            <img src="static/icons8-mac-folder-100.png" alt="Folder Icon"> <!-- Mac-style folder icon -->
+        <div class="attach-icon" title="Прикрепить файл" id="attachIcon">
+          <img src="static/icons8-mac-folder-100.png" alt="Folder Icon"> <!-- Mac-style folder icon -->
         </div>
+
+        <!-- Hidden file input -->
+        <input type="file" id="fileInput" style="display:none;" />
 
         <input type="text" class="input-field" id="messageInput" placeholder="Введите сообщение..." oninput="toggleSendButton()"/>
 
@@ -216,6 +218,30 @@
               });
           }
       });
+
+      // Open file dialog when clicking the folder icon
+      document.getElementById('attachIcon').addEventListener('click', function() {
+          document.getElementById('fileInput').click(); // Trigger click on hidden file input
+      });
+
+      // Handle file upload
+      document.getElementById('fileInput').addEventListener('change', async (event) => {
+          const file = event.target.files[0];
+
+          if (file) {
+              const formData = new FormData();
+              formData.append('file', file);
+
+              const response = await fetch('/uploadfile/', { // Adjust endpoint as necessary
+                  method: 'POST',
+                  body: formData,
+              });
+
+              const result = await response.json();
+              console.log(result); // Handle the response as needed
+          }
+      });
+
     </script>
 
 </body>
