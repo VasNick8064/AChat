@@ -1,10 +1,10 @@
 import asyncio
-from typing import Any, Annotated
-from fastapi import FastAPI, Depends, HTTPException, Form, Request, File, UploadFile
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, Form, Request, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
-from models import Message
+from app.models import Message
 
 achat = FastAPI(
     title="AChat",

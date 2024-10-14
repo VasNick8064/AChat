@@ -13,4 +13,4 @@ class Message(BaseModel):  # Определяем модель структур�
     # def message_length(cls, v):
     #     if len(v) > 140:
     #         raise ValueError("Введите не более 140 символов")
-    #     return v
+    #     return
