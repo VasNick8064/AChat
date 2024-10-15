@@ -1,6 +1,5 @@
 import asyncio
-import uvicorn
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import FastAPI, HTTPException, Form, Request, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
@@ -23,16 +22,16 @@ templates = Jinja2Templates(directory='templates')
 
 @achat.get("/chat", response_class=HTMLResponse, status_code=200)
 async def get_started(request: Request):
-    return templates.TemplateResponse("chat.html", {"request": request})
+    return templates.TemplateResponse("chat.html", {"request": request, "message": message})
 
 
 """
 Метод отправки сообщений
 """
 
-
 @achat.post("/sm", status_code=200)
 async def send_message(request: Request, message: Message = Form(...)):
+    message.append(message)
     return templates.TemplateResponse("chat.html", {"request": request, "message": message})
 
 
