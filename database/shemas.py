@@ -1,12 +1,14 @@
 import psycopg2
+from config import dbname, user, password, host, port
+
 
 try:
     conn = psycopg2.connect(
-        dbname="achat",
-        user="postgres",
-        password="8064",
-        host="127.0.0.1",
-        port="5432"
+        dbname=dbname,
+        user=user,
+        password=password,
+        host=host,
+        port=port
     )
 
     print("Подключение успешно!")

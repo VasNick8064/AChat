@@ -1,11 +1,12 @@
 import asyncio
+import uvicorn
 from typing import Annotated
 from fastapi import FastAPI, HTTPException, Form, Request, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 from app.models import Message
-from database.shemas import conn
+
 
 achat = FastAPI(
     title="AChat",
