@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, Form, Request, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
-from app.models import Message
+
 
 
 achat = FastAPI(
@@ -30,7 +30,7 @@ async def get_started(request: Request):
 """
 
 @achat.post("/sm", status_code=200)
-async def send_message(request: Request, message: Message = Form(...)):
+async def send_message(request: Request, message: Form(...)):
     message.append(message)
     return templates.TemplateResponse("chat.html", {"request": request, "message": message})
 
