@@ -1,14 +1,16 @@
-from typing import Any
-from typing_extensions import Self
+from pydantic import BaseModel, Field, EmailStr, field_validator, ValidationError
 
-from pydantic import BaseModel, Field, EmailStr, field_validator
+"""
+(Pydantic) Модель user для регистрации пользователей
+Модель пользователя: эта модель используется для проверки и сериализации пользовательского ввода, 
+особенно во время регистрации или входа в систему.
+"""
 
 
 class User(BaseModel):
     email: EmailStr = Field(default=..., description="E-mail пользователя")
     name: str = Field(default=..., min_length=4, max_length=20, description="Имя пользователя")
     password: str = Field(default=..., description="Пароль пользователя")
-
 
     @field_validator("password")
     @classmethod
@@ -20,3 +22,25 @@ class User(BaseModel):
         if not any(char.isupper() for char in password):
             raise ValueError("Пароль должен содержать хотя бы одну заглавную букву")
         return password
+
+
+"""
+Test
+"""
+# data = {
+#     "email": "afwf@mail.ru",
+#     "name": "Test",
+#     "password": "Password1"
+#
+# }
+#
+#
+# def test_val(data: dict) -> None:
+#     try:
+#         users = User(**data)
+#         print(users)
+#     except ValidationError as e:
+#         print(f"Ошибка валидации: {e}")
+#
+#
+# test_val(data)
