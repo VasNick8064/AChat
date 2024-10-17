@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet"> <!-- Import Leckerli One font -->
+    <title>Registration / Login - AChat</title>
+    <link rel="stylesheet" href="/static/start_page.css"> <!-- Подключение CSS -->
+</head>
+<body>
+
+    <div class="auth-title" id="registrationTitle">Sign up</div>
+
+    <!-- Registration Form -->
+    <div class="auth-container" id="authContainer">
+        <input type="email" class="input-field" id="email" placeholder="E-mail" required> <!-- Поле для электронной почты -->
+        <input type="text" class="input-field" id="name" placeholder="Ваше имя" required> <!-- Поле для имени -->
+        <input type="password" class="input-field" id="password" placeholder="Пароль" required> <!-- Поле для пароля -->
+        <button class="auth-button" id="registerButton">Sign up</button>
+
+        <div class="toggle-link">
+          <a href="#" id="toggleLink" style="color:#209CEE;">I have an account</a>
+        </div>
+    </div>
+
+    <!-- Login Form (initially hidden) -->
+    <div class="auth-container" id="loginContainer" style="display:none;">
+        <input type="text" class="input-field" id="loginUsername" placeholder="Имя пользователя" required>
+        <input type="password" class="input-field" id="loginPassword" placeholder="Пароль" required>
+        <button class="auth-button" id="loginButton">Login</button>
+
+        <div class="toggle-link">
+          <a href="#" id="backToRegisterLink" style="color:#209CEE;">No account? Sign up!</a>
+        </div>
+    </div>
+
+    <!-- Use CDN for GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="/static/start_page.js"></script> <!-- Подключение JavaScript -->
+</body>
+</html>

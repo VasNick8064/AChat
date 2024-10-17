@@ -1,0 +1,114 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.chat-title {
+    text-align: center; /* Center the title */
+    font-size: 40px; /* Increased font size */
+    font-weight: bold;
+    color: #209CEE; /* Match the overall color scheme */
+    margin-top: 20px; /* Add some space at the top */
+    font-family: 'Leckerli One', cursive; /* Apply Leckerli One font */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+.chat-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.input-container {
+    padding: 20px;
+    display: flex;
+    align-items: center; /* Выравнивание по вертикали */
+    position: fixed; /* Fix position at bottom */
+    bottom: 60px; /* Adjusted to be slightly above the bottom */
+    left: 20px; /* Add some left margin */
+    right: 20px; /* Add some right margin */
+}
+
+.input-field {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: #209CEE; /* Цвет кнопки отправки */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+    background-color: #007bff; /* Темнее при наведении */
+}
+
+.attach-icon {
+   margin-right: 10px; /* Отступ справа от поля ввода */
+   cursor: pointer;
+}
+
+.attach-icon img {
+   width: 40px; /* Increased width for folder icon */
+   height: auto; /* Maintain aspect ratio */
+}
+
+.user-icon {
+   position: absolute;
+   top: 20px;
+   right: 20px;
+   cursor: pointer;
+   width: 40px; /* Smaller size for user icon */
+}
+
+.dropdown {
+   display: none;
+   position: absolute;
+   top: 60px;
+   right: 20px;
+   background-color: white;
+   border-radius: 5px;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.dropdown a {
+   display:block;
+   padding:10px;
+   color:#333;
+   text-decoration:none;
+   text-align:center;
+   opacity: 0; /* Start hidden for animation */
+   transform: translateY(-10px); /* Start slightly above */
+   transition: opacity 0.3s ease, transform 0.3s ease; /* Animation for dropdown items */
+}
+
+.dropdown a:hover {
+   background-color:#f0f0f0;
+}
+
+/* Animation for chat title on hover */
+.chat-title:hover span {
+   transform: translateX(2px); /* Slightly move letters to the right on hover */
+   transition-duration: 0.3s; /* Smooth transition duration */
+   display:inline-block; /* Ensure proper spacing between letters */
+   margin-left : -2px; /* Adjust spacing between letters */
+   color : #0056b3; /* Change color on hover */
+}

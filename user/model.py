@@ -1,14 +1,22 @@
-from sqlalchemy import String, Integer
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.orm import declarative_base
+from typing import Any
+from typing_extensions import Self
 
-Base = declarative_base()
+from pydantic import BaseModel, Field, EmailStr, field_validator
 
 
-class User(Base):
-    __tablename__ = 'users'
+class User(BaseModel):
+    email: EmailStr = Field(default=..., description="E-mail пользователя")
+    name: str = Field(default=..., min_length=4, max_length=20, description="Имя пользователя")
+    password: str = Field(default=..., description="Пароль пользователя")
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    hashed_password: Mapped[str] = mapped_column(String, nullable=False)
-    email: Mapped[str] = mapped_column(String, nullable=False)
+
+    @field_validator("password")
+    @classmethod
+    def password_validate(cls, password):
+        if len(password) < 8:
+            raise ValueError("Пароль должен содержать не менее 8 символов")
+        if not any(char.isdigit() for char in password):
+            raise ValueError("Пароль должен содержать хотя бы одну цифру")
+        if not any(char.isupper() for char in password):
+            raise ValueError("Пароль должен содержать хотя бы одну заглавную букву")
+        return password

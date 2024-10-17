@@ -5,8 +5,6 @@ from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 
-
-
 achat = FastAPI(
     title="AChat",
     version="0.0.1")
@@ -20,18 +18,17 @@ templates = Jinja2Templates(directory='templates')
 """
 
 
-@achat.get("/chat", response_class=HTMLResponse, status_code=200)
-async def get_started(request: Request):
-    return templates.TemplateResponse("chat.html", {"request": request, "message": message})
-
+@achat.get("/chat", status_code=200)
+async def get_chat(request: Request):
+    return templates.TemplateResponse("chat.html", {"request": request})
 
 """
 Метод отправки сообщений
 """
 
+
 @achat.post("/sm", status_code=200)
-async def send_message(request: Request, message: Form(...)):
-    message.append(message)
+async def send_message(request: Request, message: str):
     return templates.TemplateResponse("chat.html", {"request": request, "message": message})
 
 
@@ -40,9 +37,9 @@ async def send_message(request: Request, message: Form(...)):
 """
 
 
-@achat.get("/", response_class=HTMLResponse, status_code=200)
+@achat.get("/",  status_code=200)
 async def get_started(request: Request):
-    return templates.TemplateResponse("welcome.html", {"request": request})
+    return templates.TemplateResponse("start_page.html", {"request": request})
 
 
 """
