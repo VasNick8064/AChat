@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, field_validator, ValidationError
+from pydantic import BaseModel, Field, EmailStr, field_validator
 
 """
 (Pydantic) Модель user для регистрации пользователей

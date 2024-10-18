@@ -8,3 +8,7 @@ user=os.getenv("user")
 password=os.getenv("password")
 host=os.getenv("host")
 port=os.getenv("port")
+
+"""
+Так же можно через Pydantic_Setting
+"""

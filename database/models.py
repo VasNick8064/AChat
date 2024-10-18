@@ -1,7 +1,6 @@
-from sqlalchemy.orm import Mapped, mapped_column, declarative_base, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, Text, ForeignKey
-
-Base = declarative_base()
+from database import Base
 
 """
 (SQLAlchemy) Модель таблицы users 
@@ -14,7 +13,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String, nullable=False)
+    name: Mapped[str] = mapped_column(String, nullable=False) #Добавить шифрование?
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False)
 
@@ -32,9 +31,8 @@ class User(Base):
 class Message(Base):
     __tablename__ = 'messages'
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),
-                                         nullable=False)  # Внешний ключ на id пользователя в User
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),nullable=False)  # Внешний ключ на id пользователя в User
     content: Mapped[str] = mapped_column(Text)
 
     # Связь между Message и User
