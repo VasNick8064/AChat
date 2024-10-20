@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel, Field, EmailStr, field_validator
+from pydantic import BaseModel, Field, EmailStr, field_validator, ValidationError
 
 """
 schemas - здесь представлены модели, которые мы используем
@@ -36,11 +36,10 @@ Test
 #     "email": "afwf@mail.ru",
 #     "name": "Test",
 #     "password": "Password1"
-#
 # }
 #
 #
-# def test_val(data: dict) -> None:
+# def test_val(data: dict):
 #     try:
 #         users = User(**data)
 #         print(users)
@@ -49,6 +48,7 @@ Test
 #
 #
 # test_val(data)
+
 """
 (Pydantic) Модель message для отправки сообщений <<<нужна ли она вообще?>>>
 """

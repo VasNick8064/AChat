@@ -18,13 +18,8 @@ DB_PASSWORD = password
 
 DATABASE_URL = f'postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
-"""
-expire_on_commit - разрешает доступ к уже загруженным данным без повторного обращения к базе данных. 
-возможно данные будут "устаревать"!!!!
-"""
-
 engine = create_async_engine(DATABASE_URL)  # асинхронное подключение к базе данных PostgreSQL
-async_session_maker = async_sessionmaker(engine, expire_on_commit=False)  # фабрика асинхронных сессий
+async_session_maker = async_sessionmaker(engine, expire_on_commit=True)  # фабрика асинхронных сессий
 
 """
 Base: абстрактный класс, от которого наследуются все модели. 
@@ -35,3 +30,11 @@ Base: абстрактный класс, от которого наследую�
 
 class Base(AsyncAttrs, DeclarativeBase):
     __abstract__ = True
+
+
+"""
+create_tables функция создания таблиц в БД
+"""
+async def create_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)

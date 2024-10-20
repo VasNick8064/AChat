@@ -45,4 +45,3 @@ async def create_upload_file(file: UploadFile):
     if len(file.filename) > 41943040:
         raise HTTPException(status_code=400, detail="Большой размер файла")
     return {"filename": file.filename}
-
