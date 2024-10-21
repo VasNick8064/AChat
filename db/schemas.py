@@ -1,32 +1,32 @@
 from datetime import datetime
-from pydantic import BaseModel, Field, EmailStr, field_validator, ValidationError
+from pydantic import BaseModel, Field, EmailStr, field_validator
 
 """
 schemas - здесь представлены модели, которые мы используем
 """
 
 """
-(Pydantic) Модель user для регистрации пользователей
-Модель пользователя: эта модель используется для проверки и сериализации пользовательского ввода, 
+(Pydantic) 
+Модель UserReg: эта модель используется для проверки и сериализации пользовательского ввода, 
 особенно во время регистрации или входа в систему.
 """
 
 
-class User(BaseModel):
+class UserReg(BaseModel):
     email: EmailStr = Field(default=..., description="E-mail пользователя")
     name: str = Field(default=..., min_length=4, max_length=20, description="Имя пользователя")
-    password: str = Field(default=..., description="Пароль пользователя")
+    hashed_password: str = Field(default=..., description="Пароль пользователя")
 
-    @field_validator("password")
+    @field_validator("hashed_password")
     @classmethod
-    def password_validate(cls, password):
-        if len(password) < 8:
+    def password_validate(cls, hashed_password):
+        if len(hashed_password) < 8:
             raise ValueError("Пароль должен содержать не менее 8 символов")
-        if not any(char.isdigit() for char in password):
+        if not any(char.isdigit() for char in hashed_password):
             raise ValueError("Пароль должен содержать хотя бы одну цифру")
-        if not any(char.isupper() for char in password):
+        if not any(char.isupper() for char in hashed_password):
             raise ValueError("Пароль должен содержать хотя бы одну заглавную букву")
-        return password
+        return hashed_password
 
 
 """

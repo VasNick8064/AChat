@@ -4,7 +4,7 @@ from starlette.staticfiles import StaticFiles
 from chat.app import router
 import asyncio
 from database import create_tables
-from db.models import User, Message
+from user.router import auth_router
 
 achat = FastAPI(
     title="AChat",
@@ -25,6 +25,7 @@ async def get_started(request: Request):
 
 
 achat.include_router(router)  # Подключаем маршруты из app
+achat.include_router(auth_router)  # Подключаем маршруты из User
 
 
 async def main():

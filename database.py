@@ -1,6 +1,5 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase
-
 from config import host, port, dbname, user, password
 
 DB_HOST = host
@@ -35,6 +34,8 @@ class Base(AsyncAttrs, DeclarativeBase):
 """
 create_tables функция создания таблиц в БД
 """
+
+
 async def create_tables():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
