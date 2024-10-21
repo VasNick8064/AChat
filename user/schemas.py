@@ -20,6 +20,8 @@ class UserReg(BaseModel):
     @field_validator("hashed_password")
     @classmethod
     def password_validate(cls, hashed_password):
+        if len(hashed_password) > 20:
+            raise ValueError("Пароль должен содержать не более 20 символов")
         if len(hashed_password) < 8:
             raise ValueError("Пароль должен содержать не менее 8 символов")
         if not any(char.isdigit() for char in hashed_password):
@@ -30,24 +32,14 @@ class UserReg(BaseModel):
 
 
 """
-Test
+(Pydantic) Модель UserAuth для авторизации зарегистрированного пользователя
 """
-# data = {
-#     "email": "afwf@mail.ru",
-#     "name": "Test",
-#     "password": "Password1"
-# }
-#
-#
-# def test_val(data: dict):
-#     try:
-#         users = User(**data)
-#         print(users)
-#     except ValidationError as e:
-#         print(f"Ошибка валидации: {e}")
-#
-#
-# test_val(data)
+
+
+class UserAuth(BaseModel):
+    email: EmailStr = Field(..., description="Электронная почта")
+    password: str = Field(..., min_length=8, max_length=20, description="Пароль, от 8 до 20 знаков")
+
 
 """
 (Pydantic) Модель message для отправки сообщений <<<нужна ли она вообще?>>>

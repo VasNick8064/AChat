@@ -47,6 +47,11 @@ def create_access_token(data: dict) -> str:
     return encode_jwt
 
 
+"""
+authenticate_user - функция, которая принимает Email и пароль, и проверяет есть ли такой пользователь в базе данных.
+"""
+
+
 async def authenticate_user(email: EmailStr, password: str):
     user = await UsersDAO.find_one_or_none(email=email)
     if not user or verify_password(plain_password=password, hashed_password=user.hashed_password) is False:

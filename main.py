@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from starlette.staticfiles import StaticFiles
-from chat.app import router
+from chat.app import app_router
 import asyncio
 from database import create_tables
 from user.router import auth_router
@@ -14,6 +14,9 @@ achat.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory='templates')
 
+
+achat.include_router(app_router)  # Подключаем маршруты из app
+achat.include_router(auth_router)  # Подключаем маршруты из User
 """
 Начальная страница чата
 """
@@ -22,10 +25,6 @@ templates = Jinja2Templates(directory='templates')
 @achat.get("/", status_code=200)
 async def get_started(request: Request):
     return templates.TemplateResponse("start_page.html", {"request": request})
-
-
-achat.include_router(router)  # Подключаем маршруты из app
-achat.include_router(auth_router)  # Подключаем маршруты из User
 
 
 async def main():
