@@ -1,14 +1,14 @@
-from typing import Dict
-
-from fastapi import APIRouter, HTTPException, status, Depends
-from starlette.responses import JSONResponse, Response
-
+from fastapi import APIRouter, HTTPException, status, Depends, Request
+from starlette.responses import JSONResponse, Response, HTMLResponse
+from fastapi.templating import Jinja2Templates
 from db.models import User
 from user.auth import get_password_hash, authenticate_user, create_access_token
 from user.dao import UsersDAO
 from user.dependencies import get_current_user
 from user.schemas import UserReg, UserAuth
 
+
+templates = Jinja2Templates(directory='templates')
 auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 """
@@ -68,6 +68,7 @@ get_me получаем информацию о пользователе
 async def get_me(user_data: User = Depends(get_current_user)):
     return user_data
 
+
 """
 logout_user удаляем JWT токен из куки
 """
@@ -77,3 +78,8 @@ logout_user удаляем JWT токен из куки
 async def logout_user(response: Response):
     response.delete_cookie(key="users_access_token")
     return {"message": "Пользователь вышел из системы"}
+
+
+@auth_router.get("/", response_class=HTMLResponse, summary="Страница авторизации")
+async def get_categories(request: Request):
+    return templates.TemplateResponse("start_page.html", {"request": request})
