@@ -15,20 +15,20 @@ schemas - здесь представлены модели, которые мы 
 class UserReg(BaseModel):
     email: EmailStr = Field(default=..., description="E-mail пользователя")
     name: str = Field(default=..., min_length=4, max_length=20, description="Имя пользователя")
-    hashed_password: str = Field(default=..., description="Пароль пользователя")
+    password: str = Field(default=..., description="Пароль пользователя")
 
-    @field_validator("hashed_password")
+    @field_validator("password")
     @classmethod
-    def password_validate(cls, hashed_password):
-        if len(hashed_password) > 20:
+    def password_validate(cls, password):
+        if len(password) > 20:
             raise ValueError("Пароль должен содержать не более 20 символов")
-        if len(hashed_password) < 8:
+        if len(password) < 8:
             raise ValueError("Пароль должен содержать не менее 8 символов")
-        if not any(char.isdigit() for char in hashed_password):
+        if not any(char.isdigit() for char in password):
             raise ValueError("Пароль должен содержать хотя бы одну цифру")
-        if not any(char.isupper() for char in hashed_password):
+        if not any(char.isupper() for char in password):
             raise ValueError("Пароль должен содержать хотя бы одну заглавную букву")
-        return hashed_password
+        return password
 
 
 """
@@ -42,7 +42,7 @@ class UserAuth(BaseModel):
 
 
 """
-(Pydantic) Модель message для отправки сообщений <<<нужна ли она вообще?>>>
+(Pydantic) Модель message для отправки сообщений
 """
 
 
