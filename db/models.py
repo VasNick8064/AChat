@@ -17,9 +17,6 @@ class User(Base):
     password: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False)
 
-    # Связь между User и Message
-    messages: Mapped[list["Message"]] = relationship("Message", back_populates="user")
-
 
 """
 (SQLAlchemy) Модель таблицы messages
@@ -31,9 +28,7 @@ class User(Base):
 class Message(Base):
     __tablename__ = 'messages'
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'),nullable=False)  # Внешний ключ на id пользователя в User
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    sender_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
+    recipient_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
     content: Mapped[str] = mapped_column(Text)
-
-    # Связь между Message и User
-    user: Mapped[User] = relationship("User", back_populates="messages")

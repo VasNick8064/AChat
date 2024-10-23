@@ -1,13 +1,16 @@
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import RedirectResponse
+from starlette import status
+from starlette.responses import RedirectResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 from chat.app import app_router
 import asyncio
 from database import create_tables
 from user.exceptions import TokenExpiredException, TokenNoFoundException
 from user.router import auth_router
+from chat.router import chat_router
 
 achat = FastAPI(  # создание экземпляра приложения
     title="AChat",
@@ -27,6 +30,7 @@ templates = Jinja2Templates(directory='templates')
 
 achat.include_router(app_router)  # Подключаем маршруты из app
 achat.include_router(auth_router)  # Подключаем маршруты из User
+achat.include_router(chat_router) # Подключаем маршруты из Chat
 """
 Начальная страница чата
 """

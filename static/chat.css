@@ -40,25 +40,25 @@ body {
 }
 
 .input-field {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+   flex-grow: 1;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   margin-right: 10px;
 }
 
 .send-button {
-    padding: 10px 20px;
-    background-color: #209CEE; /* Цвет кнопки отправки */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+   padding: 10px 20px;
+   background-color: #209CEE; /* Цвет кнопки отправки */
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
 }
 
 .send-button:hover {
-    background-color: #007bff; /* Темнее при наведении */
+   background-color: #007bff; /* Темнее при наведении */
 }
 
 .attach-icon {
@@ -104,11 +104,26 @@ body {
    background-color:#f0f0f0;
 }
 
+/* Стилизация сообщений */
+.message {
+   padding: 10px;
+   margin-bottom: 10px;
+   border-radius: 5px;
+}
+
+.message.me {
+   background-color:#209CEE;
+   color:white;
+   align-self:flex-end;
+}
+
+.message.other {
+   background-color:#f0f0f0;
+   color:black;
+}
+
 /* Animation for chat title on hover */
 .chat-title:hover span {
    transform: translateX(2px); /* Slightly move letters to the right on hover */
    transition-duration: 0.3s; /* Smooth transition duration */
-   display:inline-block; /* Ensure proper spacing between letters */
-   margin-left : -2px; /* Adjust spacing between letters */
-   color : #0056b3; /* Change color on hover */
 }

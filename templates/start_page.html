@@ -29,7 +29,7 @@
 
     <!-- Login Form (initially hidden) -->
     <div class="auth-container" id="loginContainer" style="display:none;">
-        <input type="text" class="input-field" id="loginUsername" placeholder="Имя пользователя" required>
+        <input type="email" class="input-field" id="loginUsername" placeholder="E-mail" required>
         <input type="password" class="input-field" id="loginPassword" placeholder="Пароль" required>
         <button class="auth-button" id="loginButton">Login</button>
 
@@ -37,6 +37,9 @@
           <a href="#" id="backToRegisterLink" style="color:#209CEE;">No account? Sign up!</a>
         </div>
     </div>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification" style="display: none;"></div>
 
     <!-- Use CDN for GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

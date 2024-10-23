@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Depends, Request
-from starlette.responses import JSONResponse, Response, HTMLResponse
+from starlette.responses import JSONResponse, Response, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from db.models import User
 from user.auth import get_password_hash, authenticate_user, create_access_token
@@ -9,6 +9,7 @@ from user.schemas import UserReg, UserAuth
 
 
 templates = Jinja2Templates(directory='templates')
+
 auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 """
@@ -42,8 +43,7 @@ async def login_user(response: Response, user_data: UserAuth) -> dict[str, str |
     access_token = create_access_token({"sub": str(check.id)})
     response.set_cookie(key="users_access_token", value=access_token,
                         httponly=True)  # httponly - куки доступны только через HTTP или HTTPS
-    return {'access_token': access_token, 'refresh_token': None}
-
+    return {"message": "Вы успешно вошли!", "redirect_url": "/chat"}
 
 """
 Функция create_access_token вызывается для создания веб-токена JSON (JWT).
@@ -77,7 +77,8 @@ logout_user удаляем JWT токен из куки
 @auth_router.post("/logout")
 async def logout_user(response: Response):
     response.delete_cookie(key="users_access_token")
-    return {"message": "Пользователь вышел из системы"}
+    print("Куки удалены")
+    return {"message": "Пользователь вышел из системы", "redirect_url": "/auth"}
 
 
 @auth_router.get("/", response_class=HTMLResponse, summary="Страница авторизации")

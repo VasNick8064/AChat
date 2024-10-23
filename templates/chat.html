@@ -7,8 +7,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
     <link rel="manifest" href="/static/site.webmanifest">
-    <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet"> <!-- Import Leckerli One font -->
-    <link rel="stylesheet" href="static/chat.css"> <!-- Подключение CSS файла -->
+    <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/chat.css"> <!-- Подключение CSS -->
     <title>AChat</title>
 </head>
 <body>
@@ -22,21 +22,21 @@
     </div>
 
     <!-- User Icon -->
-    <img src="static/user.png" alt="User Icon" class="user-icon" id="userIcon">
+    <img src="/static/user.png" alt="User Icon" class="user-icon" id="userIcon">
 
     <!-- Dropdown Menu -->
     <div class="dropdown" id="dropdownMenu">
       <a href="#" id="logoutButton">Выйти</a>
     </div>
 
-    <div class="chat-container">
-        <!-- Removed message labels -->
+    <div class="chat-container" id="chatContainer">
+        <!-- Messages will be displayed here -->
     </div>
 
     <!-- Input container for message input -->
     <div class="input-container">
         <div class="attach-icon" title="Прикрепить файл" id="attachIcon">
-          <img src="static/icons8-mac-folder-100.png" alt="Folder Icon"> <!-- Mac-style folder icon -->
+          <img src="/static/icons8-mac-folder-100.png" alt="Folder Icon"> <!-- Mac-style folder icon -->
         </div>
 
         <!-- Hidden file input -->
@@ -49,7 +49,9 @@
 
     <!-- Use CDN for GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="static/chat.js"></script> <!-- Подключение JS файла -->
+
+    <!-- Подключение JavaScript файла -->
+    <script src="/static/chat.js"></script>
 
 </body>
 </html>
