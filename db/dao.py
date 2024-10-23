@@ -1,12 +1,11 @@
 """
  «Data Access Object» (объект доступа к данным) описаны общие методы, которые используются для CRUD операций.
 """
-from email import message
+
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.future import select
-from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete, func
-from sqlalchemy.sql.functions import current_user
+
 
 from database import async_session_maker
 
@@ -82,8 +81,6 @@ class BaseDAO:
                 new_instance = cls.model(**values)
                 session.add(new_instance)
                 try:
-                    print(
-                        f"Sender ID: {current_user.id}, Recipient ID: {message.recipient_id}, Content: {message.content}")
                     await session.commit()
                 except SQLAlchemyError as e:
                     await session.rollback()
