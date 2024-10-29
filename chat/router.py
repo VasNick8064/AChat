@@ -2,8 +2,6 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Request, Depends,
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from typing import List, Dict
-
-
 from chat.dao import MessageDAO
 from chat.schemas import MessageRead, MessageCreate
 from user.dao import UsersDAO
@@ -11,9 +9,8 @@ from user.dependencies import get_current_user
 from db.models import User
 import asyncio
 import random
-import logging
 
-logger = logging.getLogger(__name__)
+
 chat_router = APIRouter(prefix='/chat', tags=['Chat'])
 templates = Jinja2Templates(directory='app/templates')
 
