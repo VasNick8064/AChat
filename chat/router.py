@@ -2,6 +2,8 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Request, Depends,
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from typing import List, Dict
+
+
 from chat.dao import MessageDAO
 from chat.schemas import MessageRead, MessageCreate
 from user.dao import UsersDAO
@@ -9,7 +11,9 @@ from user.dependencies import get_current_user
 from db.models import User
 import asyncio
 import random
+import logging
 
+logger = logging.getLogger(__name__)
 chat_router = APIRouter(prefix='/chat', tags=['Chat'])
 templates = Jinja2Templates(directory='app/templates')
 
@@ -36,17 +40,24 @@ async def send_message(message: MessageCreate, current_user: User = Depends(get_
     await MessageDAO.add(
         sender_id=current_user.id,
         content=message.content,
-        recipient_id=message.recipient_id
+        recipient_id=message.recipient_id,
     )
     message_data = {
-        'sender_id': current_user.id,
+        'current_user_id': current_user.id,
         'recipient_id': message.recipient_id,
         'content': message.content,
+        'name_user': current_user.name
     }
+
     await notify_user(message.recipient_id, message_data)
     await notify_user(current_user.id, message_data)
+    print(f"Current user name: {current_user.name}")
 
-    return {'recipient_id': message.recipient_id, 'content': message.content, 'status': 'ok', 'msg': 'Message saved!'}
+    return {'recipient_id': message.recipient_id,
+            'content': message.content,
+            'name_user': current_user.name,
+            'status': 'ok',
+            'msg': 'Message saved!'}
 
 
 async def notify_user(user_id: int, message: dict):

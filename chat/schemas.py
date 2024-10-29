@@ -11,3 +11,4 @@ class MessageRead(BaseModel):
 class MessageCreate(BaseModel):
     recipient_id: int = Field(..., description="ID получателя сообщения")
     content: str = Field(..., description="Содержимое сообщения")
+    name_user: str = Field(..., description="Имя польз")

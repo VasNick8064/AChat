@@ -22,7 +22,7 @@ async function loadMessages() {
     if (response.ok) {
         const messages = await response.json();
         messages.forEach(message => {
-            addMessageToChat(message.content, message.sender_id === currentUserId ? 'me' : 'other'); // Используем currentUserId
+            addMessageToChat(message.content, message.sender_id === currentUserId ? 'me' : 'other', message.name_user); // Используем currentUserId и name_user
         });
     } else {
         console.error('Ошибка при загрузке сообщений:', response.statusText);
@@ -45,6 +45,9 @@ document.getElementById('sendButton').addEventListener('click', async () => {
         // Получите токен аутентификации из локального хранилища или другого места
         const token = localStorage.getItem('token'); // Или другой способ получения токена
 
+        // Получите имя пользователя (например, из глобальной переменной или API)
+        const nameUser = "ВашеИмя"; // Замените на фактическое имя пользователя
+
         const response = await fetch('/chat/messages', { // Правильный маршрут
             method: 'POST',
             headers: {
@@ -54,6 +57,7 @@ document.getElementById('sendButton').addEventListener('click', async () => {
             body: JSON.stringify({
                 content: content,
                 recipient_id: recipientId,
+                name_user: nameUser // Добавляем name_user
             }),
         });
 
@@ -61,8 +65,8 @@ document.getElementById('sendButton').addEventListener('click', async () => {
             const result = await response.json();
             console.log(result); // Обработка результата
 
-            // Добавление сообщения в чат
-            addMessageToChat(result.content, 'me'); // 'me' для отправителя
+            // Добавление сообщения в чат с учетом имени пользователя
+            addMessageToChat(result.content, 'me', result.name_user); // 'me' для отправителя
 
             messageInput.value = ''; // Очистка поля ввода
             toggleSendButton(); // Скрыть кнопку отправки
@@ -76,13 +80,13 @@ document.getElementById('sendButton').addEventListener('click', async () => {
 });
 
 // Функция для добавления сообщения в чат
-function addMessageToChat(content, sender) {
+function addMessageToChat(content, sender, nameUser) {
     const chatContainer = document.getElementById('chatContainer');
 
     const messageDiv = document.createElement('div');
     messageDiv.className = sender === 'me' ? 'message me' : 'message other'; // Добавьте соответствующий класс для стилизации
 
-    messageDiv.textContent = content;
+    messageDiv.textContent = `${nameUser}: ${content}`; // Добавляем имя пользователя к сообщению
 
     chatContainer.appendChild(messageDiv);
 }
@@ -107,13 +111,11 @@ userIcon.addEventListener('click', function() {
 document.getElementById('logoutButton').addEventListener('click', function(e) {
     e.preventDefault();
 
-    // Здесь вы можете добавить логику для выхода из системы, например:
     localStorage.removeItem('token'); // Удаляем токен из локального хранилища
 
     alert('Вы вышли из аккаунта!');
     dropdownMenu.style.display = 'none'; // Скрыть выпадающее меню после выхода
 
-    // Перенаправление на страницу входа или обновление страницы может быть полезным:
     window.location.href = '/login'; // Замените на фактический путь к странице входа
 });
 
