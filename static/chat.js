@@ -1,3 +1,4 @@
+
 gsap.from(".chat-title", {
     opacity: 0,
     y: 10,
@@ -22,7 +23,7 @@ async function loadMessages() {
     if (response.ok) {
         const messages = await response.json();
         messages.forEach(message => {
-            addMessageToChat(message.content, message.sender_id === currentUserId ? 'me' : 'other', message.name_user); // Используем currentUserId и name_user
+            addMessageToChat(message.content, message.sender_id === currentUserId ? 'me' : 'other', message.name_user);
         });
     } else {
         console.error('Ошибка при загрузке сообщений:', response.statusText);
@@ -35,20 +36,15 @@ window.onload = loadMessages;
 document.getElementById('sendButton').addEventListener('click', async () => {
     const messageInput = document.getElementById('messageInput');
     const content = messageInput.value.trim();
-
-    // Замените на фактический ID получателя
     const recipientId = 1; // Пример ID получателя
 
     if (content) {
-        console.log("Отправка сообщения:", content); // Отладочная информация
+        console.log("Отправка сообщения:", content);
 
-        // Получите токен аутентификации из локального хранилища или другого места
         const token = localStorage.getItem('token'); // Или другой способ получения токена
-
-        // Получите имя пользователя (например, из глобальной переменной или API)
         const nameUser = "ВашеИмя"; // Замените на фактическое имя пользователя
 
-        const response = await fetch('/chat/messages', { // Правильный маршрут
+        const response = await fetch('/chat/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,22 +53,21 @@ document.getElementById('sendButton').addEventListener('click', async () => {
             body: JSON.stringify({
                 content: content,
                 recipient_id: recipientId,
-                name_user: nameUser // Добавляем name_user
+                name_user: nameUser
             }),
         });
 
         if (response.ok) {
             const result = await response.json();
-            console.log(result); // Обработка результата
+            console.log(result);
 
-            // Добавление сообщения в чат с учетом имени пользователя
-            addMessageToChat(result.content, 'me', result.name_user); // 'me' для отправителя
+            addMessageToChat(result.content, 'me', result.name_user); 
 
-            messageInput.value = ''; // Очистка поля ввода
-            toggleSendButton(); // Скрыть кнопку отправки
+            messageInput.value = ''; 
+            toggleSendButton(); 
         } else {
             const errorData = await response.json();
-            console.error('Ошибка при отправке сообщения:', errorData); // Выводим подробности об ошибке
+            console.error('Ошибка при отправке сообщения:', errorData);
         }
     } else {
         console.warn('Поле ввода пустое');
@@ -84,9 +79,9 @@ function addMessageToChat(content, sender, nameUser) {
     const chatContainer = document.getElementById('chatContainer');
 
     const messageDiv = document.createElement('div');
-    messageDiv.className = sender === 'me' ? 'message me' : 'message other'; // Добавьте соответствующий класс для стилизации
+    messageDiv.className = sender === 'me' ? 'message me' : 'message other';
 
-    messageDiv.textContent = `${nameUser}: ${content}`; // Добавляем имя пользователя к сообщению
+    messageDiv.textContent = `${nameUser}: ${content}`;
 
     chatContainer.appendChild(messageDiv);
 }
@@ -97,59 +92,25 @@ const dropdownMenu = document.getElementById('dropdownMenu');
 
 userIcon.addEventListener('click', function() {
     dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
 
-    // Animate dropdown items
-    const links = dropdownMenu.querySelectorAll('a');
-    links.forEach((link, index) => {
-        link.style.opacity = '1'; // Show link
-        link.style.transform = 'translateY(0)'; // Move to original position
-        link.style.transitionDelay = `${index * 50}ms`; // Staggered animation
+// Эндпоинт для logout
+document.getElementById('logoutButton').addEventListener('click', async () => {
+    const token = localStorage.getItem('token'); // Получение токена
+
+    const response = await fetch('/auth/logout', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
-});
 
-// Logout functionality
-document.getElementById('logoutButton').addEventListener('click', function(e) {
-    e.preventDefault();
-
-    localStorage.removeItem('token'); // Удаляем токен из локального хранилища
-
-    alert('Вы вышли из аккаунта!');
-    dropdownMenu.style.display = 'none'; // Скрыть выпадающее меню после выхода
-
-    window.location.href = '/login'; // Замените на фактический путь к странице входа
-});
-
-// Close dropdown when clicking outside of it
-window.addEventListener('click', function(event) {
-    if (!event.target.matches('.user-icon')) {
-        dropdownMenu.style.display = 'none';
-        const links = dropdownMenu.querySelectorAll('a');
-        links.forEach(link => {
-            link.style.opacity = '0'; // Hide link
-            link.style.transform = 'translateY(-10px)'; // Move above
-        });
+    if (response.ok) {
+        localStorage.removeItem('token'); // Удаляем токен из локального хранилища
+        window.location.href = '/auth'; // Перенаправляем на страницу логина
+    } else {
+        console.error('Ошибка при выходе:', response.statusText);
     }
 });
 
-// Open file dialog when clicking the folder icon
-document.getElementById('attachIcon').addEventListener('click', function() {
-    document.getElementById('fileInput').click(); // Trigger click on hidden file input
-});
 
-// Handle file upload
-document.getElementById('fileInput').addEventListener('change', async (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const response = await fetch('/uploadfile/', {
-            method: 'POST',
-            body: formData,
-        });
-
-        const result = await response.json();
-        console.log(result); // Обработка ответа по мере необходимости
-    }
-});
