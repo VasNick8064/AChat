@@ -10,26 +10,49 @@ from db.models import User
 import asyncio
 import random
 
-
 chat_router = APIRouter(prefix='/chat', tags=['Chat'])
+
 templates = Jinja2Templates(directory='app/templates')
 
-active_connections: Dict[int, WebSocket] = {}
+active_connections: Dict[int, WebSocket] = {}  # Пользователи, которые находятся на сайте в данный момент
 
 
 # Страница чата
 @chat_router.get("/", response_class=HTMLResponse)
 async def get_chat_page(request: Request, user_data: User = Depends(get_current_user)):
     try:
-        users_all = await UsersDAO.find_all()
+        users_all = await UsersDAO.find_all()  # нужно ли нам получать всех юзеров?
         return templates.TemplateResponse("chat.html", {"request": request, "user": user_data, 'users_all': users_all})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
+"""
+Маршрут: GET /messages/{user_id}
+Описание: Этот маршрут позволяет пользователю получить список сообщений между ним и другим пользователем, идентифицированным по user_id.
+Параметры:
+user_id: ID пользователя, чьи сообщения нужно получить.
+current_user: текущий аутентифицированный пользователь, получаемый через зависимость get_current_user.
+Возвращаемое значение: список сообщений (или пустой список, если сообщений нет).
+"""
+
+
 @chat_router.get("/messages/{user_id}", response_model=List[MessageRead])
 async def get_messages(user_id: int, current_user: User = Depends(get_current_user)):
     return await MessageDAO.get_messages_between_users(user_id_1=user_id, user_id_2=current_user.id) or []
+
+
+"""
+Маршрут: POST /messages
+Описание: Этот маршрут позволяет пользователю отправить сообщение другому пользователю.
+Параметры:
+message: объект сообщения, содержащий информацию о содержимом и получателе.
+current_user: текущий аутентифицированный пользователь.
+Процесс:
+Сообщение сохраняется в базе данных.
+Уведомления отправляются как отправителю, так и получателю с помощью функции notify_user.
+Возвращаемое значение: подтверждение успешной отправки сообщения с информацией о получателе и статусе.
+"""
 
 
 @chat_router.post("/messages", response_model=MessageCreate)
@@ -57,10 +80,26 @@ async def send_message(message: MessageCreate, current_user: User = Depends(get_
             'msg': 'Message saved!'}
 
 
+"""
+Описание: notify_user отправляет уведомление пользователю через веб-сокет, если он в данный момент подключен.
+"""
+
+
 async def notify_user(user_id: int, message: dict):
     if user_id in active_connections:
         websocket = active_connections[user_id]
         await websocket.send_json(message)
+
+
+"""
+Маршрут: ws /ws/{user_id}
+Описание: Этот маршрут устанавливает веб-сокет-соединение для пользователя, позволяя ему общаться в режиме реального времени.
+Процесс:
+Пользователь принимает соединение и добавляется в список активных подключений.
+В бесконечном цикле происходит поиск случайного онлайн-партнера для общения.
+Если партнер найден, пользователи уведомляются о друг друге.
+Если партнер не найден, пользователю отправляется сообщение об ожидании.
+"""
 
 
 @chat_router.websocket("/ws/{user_id}")
@@ -81,6 +120,11 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int):
 
     except WebSocketDisconnect:
         active_connections.pop(user_id, None)
+
+
+"""
+find_random_online_user ищет случайного пользователя из списка онлайн-пользователей, исключая текущего пользователя.
+"""
 
 
 async def find_random_online_user(exclude_user_id: int):
