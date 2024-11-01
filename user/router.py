@@ -21,7 +21,7 @@ auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @auth_router.post("/register")
-async def register_user(user_data: UserReg) -> JSONResponse:
+async def register_user(response: Response, user_data: UserReg) -> dict[str, str | None]:
     logging.info("user/router.py - register_user[Регистрация]: Попытка регистрации юзера")
     user = await UsersDAO.find_one_or_none(email=user_data.email)
     if user:  # проверка наличия пользовательских данных в бд
@@ -30,9 +30,15 @@ async def register_user(user_data: UserReg) -> JSONResponse:
     user_dict = user_data.dict()  # преобразуем экземпляр модели UserReg в словарь
     user_dict["password"] = get_password_hash(user_data.password)  # хэшируем пароль перед добавлением в бд
     await UsersDAO.add(**user_dict)  # распаковываем и добавляем учетную запись в бд add(key:value,...)
+    ########## Исправлена логика после регистрации, теперь пользователь после регистрации может писать в чат
+    check = await authenticate_user(email=user_data.email, password=user_data.password)
+    access_token = create_access_token({"sub": str(check.id)})
+    response.set_cookie(key="users_access_token", value=access_token,
+                        httponly=True)  # httponly - куки доступны только через HTTP или HTTPS
+    ##########
     logging.info("user/router.py - register_user[Регистрация]: Пользователь: " + str(user_data) +" успешно зарегистрирован")
 
-    return JSONResponse(content={"message": "Вы успешно зарегистрированы!", "redirect_url": "/chat"})
+    return {"message": "Вы успешно зарегистрировались!", "redirect_url": "/chat"}
 
 
 """
