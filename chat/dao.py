@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy import select, and_, or_
 from db.dao import BaseDAO
 from db.models import Message
@@ -9,6 +11,7 @@ class MessageDAO(BaseDAO):
 
     @classmethod
     async def get_messages_between_users(cls, user_id_1: int, user_id_2: int):
+        logging.info("Вызов функции get_messages_between_users")
         """
         Асинхронно находит и возвращает все сообщения между двумя пользователями.
 

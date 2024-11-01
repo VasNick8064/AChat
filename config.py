@@ -1,3 +1,4 @@
+import logging
 import os
 from dotenv import load_dotenv
 
@@ -17,4 +18,5 @@ algorithm = os.getenv("algorithm")
 
 
 def get_auth_data():
+    logging.info("config.py - get_auth_data: Передаем secret_key и algorithm")
     return {"secret_key": secret_key, "algorithm": algorithm}

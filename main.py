@@ -11,6 +11,9 @@ from database import create_tables
 from user.exceptions import TokenExpiredException, TokenNoFoundException
 from user.router import auth_router
 from chat.router import chat_router
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w", format='%(asctime)s - %(message)s')
 
 achat = FastAPI(  # создание экземпляра приложения
     title="AChat",
@@ -30,7 +33,7 @@ templates = Jinja2Templates(directory='templates')
 
 achat.include_router(app_router)  # Подключаем маршруты из app
 achat.include_router(auth_router)  # Подключаем маршруты из User
-achat.include_router(chat_router) # Подключаем маршруты из Chat
+achat.include_router(chat_router)  # Подключаем маршруты из Chat
 """
 Начальная страница чата
 """
@@ -54,9 +57,11 @@ async def token_no_found_exception_handler(request: Request, exc: HTTPException)
 async def main():
     try:
         await create_tables()  # Вызов функции для создания таблиц
-    except FastAPI:
-        print("Таблицы не были созданы")
+        logging.info("main.py - create_tables[Работа с БД]: Таблицы в БД были созданы")
+    except Exception as e:
+        logging.info("main.py - create_tables[Работа с БД]: Ошибка при создании таблиц" + str(e))
 
 
 if __name__ == "__main__":
     asyncio.run(main())
+

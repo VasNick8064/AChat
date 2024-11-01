@@ -9,6 +9,7 @@ from user.dependencies import get_current_user
 from db.models import User
 import asyncio
 import random
+import logging
 
 chat_router = APIRouter(prefix='/chat', tags=['Chat'])
 
@@ -57,6 +58,7 @@ current_user: текущий аутентифицированный пользо
 
 @chat_router.post("/messages", response_model=MessageCreate)
 async def send_message(message: MessageCreate, current_user: User = Depends(get_current_user)):
+    logging.info("chat/router.py - /messages [POST]: Отправка сообщения пользователем: " + current_user.name)
     await MessageDAO.add(
         sender_id=current_user.id,
         content=message.content,
@@ -71,7 +73,7 @@ async def send_message(message: MessageCreate, current_user: User = Depends(get_
 
     await notify_user(message.recipient_id, message_data)
     await notify_user(current_user.id, message_data)
-    print(f"Current user name: {current_user.name}")
+    logging.info("chat/router.py - /messages [POST]: Cообщение отправлено пользователем: " + current_user.name + ", ID: " + str(current_user.id) + ", и добавлено в БД")
 
     return {'recipient_id': message.recipient_id,
             'content': message.content,
@@ -104,13 +106,17 @@ async def notify_user(user_id: int, message: dict):
 
 @chat_router.websocket("/ws/{user_id}")
 async def websocket_endpoint(websocket: WebSocket, user_id: int):
+    logging.info("chat/router.py - //ws/{user_id} [WEBSOCKET]: Вызов функции  websocket_endpoint")
+
     await websocket.accept()
     active_connections[user_id] = websocket
 
     try:
         while True:
+            logging.info("chat/router.py - //ws/{user_id} [WEBSOCKET]: Поиск рандомного онлайн собеседника")
             partner_id = await find_random_online_user(user_id)
             if partner_id:
+                logging.info("chat/router.py - //ws/{user_id} [WEBSOCKET]: Собеседник найден")
                 await websocket.send_json({"partner_id": partner_id})
                 await active_connections[partner_id].send_json({"partner_id": user_id})
                 break  # Exit loop after pairing
@@ -129,4 +135,5 @@ find_random_online_user ищет случайного пользователя �
 
 async def find_random_online_user(exclude_user_id: int):
     online_users = [user_id for user_id in active_connections.keys() if user_id != exclude_user_id]
+    logging.info("chat/router.py - find_random_online_user: Вызов функции")
     return random.choice(online_users) if online_users else None

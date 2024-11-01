@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, HTTPException, status, Depends, Request
 from starlette.responses import JSONResponse, Response, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -20,12 +22,16 @@ auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @auth_router.post("/register")
 async def register_user(user_data: UserReg) -> JSONResponse:
+    logging.info("user/router.py - register_user[Регистрация]: Попытка регистрации юзера")
     user = await UsersDAO.find_one_or_none(email=user_data.email)
     if user:  # проверка наличия пользовательских данных в бд
+        logging.info("user/router.py - register_user[Регистрация]: ОШИБКА - пользщователь уже существует")
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Пользователь уже существует")
     user_dict = user_data.dict()  # преобразуем экземпляр модели UserReg в словарь
     user_dict["password"] = get_password_hash(user_data.password)  # хэшируем пароль перед добавлением в бд
     await UsersDAO.add(**user_dict)  # распаковываем и добавляем учетную запись в бд add(key:value,...)
+    logging.info("user/router.py - register_user[Регистрация]: Пользователь: " + str(user_data) +" успешно зарегистрирован")
+
     return JSONResponse(content={"message": "Вы успешно зарегистрированы!", "redirect_url": "/chat"})
 
 
@@ -37,12 +43,14 @@ async def register_user(user_data: UserReg) -> JSONResponse:
 
 @auth_router.post("/login")
 async def login_user(response: Response, user_data: UserAuth) -> dict[str, str | None]:
+    logging.info("user/router.py - login_user[Авторизация]: Попытка авторизации юзера: " + str(user_data))
     check = await authenticate_user(email=user_data.email, password=user_data.password)
     if check is None:  # проверяем, существует ли пользователь в БД
+        logging.info("user/router.py - login_user[Авторизация]: Ошибка авторизации юзера: " + str(user_data))
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Неверная почта или пароль')
     access_token = create_access_token({"sub": str(check.id)})
-    response.set_cookie(key="users_access_token", value=access_token,
-                        httponly=True)  # httponly - куки доступны только через HTTP или HTTPS
+    response.set_cookie(key="users_access_token", value=access_token,httponly=True)  # httponly - куки доступны только через HTTP или HTTPS
+    logging.info("user/router.py - login_user[Авторизация]: Успешная авторизация юзера: " + str(user_data))
     return {"message": "Вы успешно вошли!", "redirect_url": "/chat"}
 
 """
@@ -66,6 +74,7 @@ get_me получаем информацию о пользователе
 
 @auth_router.get("/me")
 async def get_me(user_data: User = Depends(get_current_user)):
+    logging.info("user/router.py - get_me[Информация]: Получить информацию о пользователе: " + str(user_data))
     return user_data
 
 
@@ -75,9 +84,9 @@ logout_user удаляем JWT токен из куки
 
 
 @auth_router.post("/logout")
-async def logout_user(response: Response):
+async def logout_user(response: Response, User = Depends(get_current_user)):
     response.delete_cookie(key="users_access_token")
-    print("Куки удалены")
+    logging.info("user/router.py - logout_user[Выход из системы]: Куки пользователя: " + str(User.name) + ", ID: " + str(User.id) +" удалены")
     return {"message": "Пользователь вышел из системы", "redirect_url": "/auth"}
 
 

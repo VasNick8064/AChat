@@ -1,12 +1,6 @@
-"""
- «Data Access Object» (объект доступа к данным) описаны общие методы, которые используются для CRUD операций.
-"""
-
-
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.future import select
-
-
+import logging
 from database import async_session_maker
 
 """
@@ -28,6 +22,8 @@ class BaseDAO:
         Возвращает:
             Экземпляр модели или None, если ничего не найдено.
         """
+        logging.info("db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: " + str(
+            data_id) + " или None")
         async with async_session_maker() as session:
             query = select(cls.model).filter_by(id=data_id)
             result = await session.execute(query)
@@ -44,6 +40,8 @@ class BaseDAO:
               Возвращает:
                   Экземпляр модели или None, если ничего не найдено.
         """
+        logging.info("db/dao.py - find_one_or_none [Работа с БД]: Поиск и возврат одного экземпляра модели по переданному "
+                     "параметру "+ str(filter_by) + " или None")
         async with async_session_maker() as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
@@ -60,6 +58,9 @@ class BaseDAO:
               Возвращает:
                   Список экземпляров модели.
         """
+        logging.info(
+            "db/dao.py - find_all [Работа с БД]: Поиск и возврат всех экземпляров модели по переданному"
+            "параметруу")
         async with async_session_maker() as session:
             query = select(cls.model).filter_by(**filter_by)
             result = await session.execute(query)
@@ -82,7 +83,9 @@ class BaseDAO:
                 session.add(new_instance)
                 try:
                     await session.commit()
+                    logging.info("db/dao.py - add[Работа с БД]: Запись " + str(values) + " была добавлена в БД")
                 except SQLAlchemyError as e:
+                    logging.info("db/dao.py - add[Работа с БД]: Ошибка при записи " + str(values) + "  в БД")
                     await session.rollback()
                     raise e
                 return new_instance

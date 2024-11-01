@@ -1,0 +1,104 @@
+2024-11-01 15:30:48,075 - user/router.py - register_user[Регистрация]: Попытка регистрации юзера
+2024-11-01 15:30:48,076 - db/dao.py - find_one_or_none [Работа с БД]: Поиск и возврат одного экземпляра модели по переданному параметру {'email': 'test2@mail.ru'} или None
+2024-11-01 15:30:48,124 - user/auth.py - get_password_hash[Работа с БД]: Вызов функции
+2024-11-01 15:30:48,357 - db/dao.py - add[Работа с БД]: Запись {'email': 'test2@mail.ru', 'name': 'Test', 'password': '$2b$12$LznVVm/hWzSB25z5/sp78.IRoAOpOCFgIIsLHiQkkpixsF37cUO3C'} была добавлена в БД
+2024-11-01 15:30:48,357 - user/router.py - register_user[Регистрация]: Пользователь: email='test2@mail.ru' name='Test' password='Password1!' успешно зарегистрирован
+2024-11-01 15:30:48,372 - Переход на страницу /chat
+2024-11-01 15:30:49,246 - Переход на страницу /chat
+2024-11-01 15:30:55,943 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:30:55,943 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:30:55,943 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:30:55,946 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:30:55,947 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:30:55,950 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 'wg', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:30:55,951 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:30:59,066 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:30:59,067 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:30:59,067 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:30:59,068 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:30:59,069 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:30:59,071 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 'wagawg', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:30:59,072 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:31:01,172 - Переход на страницу /chat
+2024-11-01 15:31:21,384 - user/router.py - register_user[Регистрация]: Попытка регистрации юзера
+2024-11-01 15:31:21,384 - db/dao.py - find_one_or_none [Работа с БД]: Поиск и возврат одного экземпляра модели по переданному параметру {'email': 'test21@mail.ru'} или None
+2024-11-01 15:31:21,386 - user/auth.py - get_password_hash[Работа с БД]: Вызов функции
+2024-11-01 15:31:21,597 - db/dao.py - add[Работа с БД]: Запись {'email': 'test21@mail.ru', 'name': 'TTes', 'password': '$2b$12$hYQoG2VzjSia.s2x6cm0TO/vL583rgGo1LdQ7h.qyu3hdQrLNG9.K'} была добавлена в БД
+2024-11-01 15:31:21,598 - user/router.py - register_user[Регистрация]: Пользователь: email='test21@mail.ru' name='TTes' password='Password1!' успешно зарегистрирован
+2024-11-01 15:31:21,612 - Переход на страницу /chat
+2024-11-01 15:31:24,962 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:31:24,962 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:31:24,962 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:31:24,964 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:31:24,964 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:31:24,967 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 's', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:31:24,967 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:31:30,886 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:31:30,886 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:31:30,886 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:31:30,888 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:31:30,888 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:31:30,891 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 'www', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:31:30,891 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:31:32,243 - Переход на страницу /chat
+2024-11-01 15:31:50,022 - user/router.py - register_user[Регистрация]: Попытка регистрации юзера
+2024-11-01 15:31:50,022 - db/dao.py - find_one_or_none [Работа с БД]: Поиск и возврат одного экземпляра модели по переданному параметру {'email': 'raaaa@mail.ru'} или None
+2024-11-01 15:31:50,024 - user/auth.py - get_password_hash[Работа с БД]: Вызов функции
+2024-11-01 15:31:50,238 - db/dao.py - add[Работа с БД]: Запись {'email': 'raaaa@mail.ru', 'name': 'Raaaaa', 'password': '$2b$12$LYLrzGk7exJuj62Gz860o.oGjhlDQvtt8VK2sg6sJTQt7T5WzKaau'} была добавлена в БД
+2024-11-01 15:31:50,238 - user/router.py - register_user[Регистрация]: Пользователь: email='raaaa@mail.ru' name='Raaaaa' password='Password1!' успешно зарегистрирован
+2024-11-01 15:31:50,253 - Переход на страницу /chat
+2024-11-01 15:31:55,094 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:31:55,095 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:31:55,095 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:31:55,096 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:31:55,096 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:31:55,099 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 'r', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:31:55,099 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:31:58,580 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:31:58,580 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:31:58,580 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:31:58,582 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:31:58,582 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:31:58,585 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 'ss', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:31:58,585 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:32:01,134 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:32:01,134 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:32:01,134 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:32:01,135 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:32:01,135 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Test
+2024-11-01 15:32:01,137 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 5, 'content': 'dddd', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:32:01,137 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Test, ID: 5, и добавлено в БД
+2024-11-01 15:32:03,177 - Переход на страницу /chat
+2024-11-01 15:32:06,744 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzMzMDU2MTM3fQ.07KEXcTyOuQ4Uoh1-l6NmWi_DWFmtUH9N1UAqv9FQrE
+2024-11-01 15:32:06,744 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:32:06,745 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 5 или None
+2024-11-01 15:32:06,746 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 5
+2024-11-01 15:32:06,746 - user/router.py - logout_user[Выход из системы]: Куки пользователя: Test, ID: 5 удалены
+2024-11-01 15:32:13,807 - user/router.py - login_user[Авторизация]: Попытка авторизации юзера: email='raaaa@mail.ru' password='Password1!'
+2024-11-01 15:32:13,807 - user/auth.py - authenticate_user[Работа с БД]: Вызов функции
+2024-11-01 15:32:13,807 - db/dao.py - find_one_or_none [Работа с БД]: Поиск и возврат одного экземпляра модели по переданному параметру {'email': 'raaaa@mail.ru'} или None
+2024-11-01 15:32:13,810 - user/auth.py - verify_password[Работа с БД]: Вызов функции, проверка на валидность пароля
+2024-11-01 15:32:14,017 - user/auth.py - authenticate_user[Работа с БД]: Успешная проверка на наличие пользователя raaaa@mail.ru в БД
+2024-11-01 15:32:14,018 - user/auth.py - create_access_token: Генерация токена: {'sub': '8'}
+2024-11-01 15:32:14,018 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:32:14,018 - user/auth.py - create_access_token: Возврат токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzMzMDU2MzM0fQ.e4JWXC4lGtu1s8WfL0_zZEGFbOYR4pfA8WGpYddlSRM
+2024-11-01 15:32:14,018 - user/router.py - login_user[Авторизация]: Успешная авторизация юзера: email='raaaa@mail.ru' password='Password1!'
+2024-11-01 15:32:14,034 - Переход на страницу /chat
+2024-11-01 15:32:18,149 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzMzMDU2MzM0fQ.e4JWXC4lGtu1s8WfL0_zZEGFbOYR4pfA8WGpYddlSRM
+2024-11-01 15:32:18,149 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:32:18,149 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 8 или None
+2024-11-01 15:32:18,150 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 8
+2024-11-01 15:32:18,150 - chat/router.py - /messages [POST]: Отправка сообщения пользователем: Raaaaa
+2024-11-01 15:32:18,153 - db/dao.py - add[Работа с БД]: Запись {'sender_id': 8, 'content': 'awt', 'recipient_id': 1} была добавлена в БД
+2024-11-01 15:32:18,153 - chat/router.py - /messages [POST]: Cообщение отправлено пользователем: Raaaaa, ID: 8, и добавлено в БД
+2024-11-01 15:32:24,699 - user/dependencies.py - get_current_user: Получаем данные из токена: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzMzMDU2MzM0fQ.e4JWXC4lGtu1s8WfL0_zZEGFbOYR4pfA8WGpYddlSRM
+2024-11-01 15:32:24,699 - config.py - get_auth_data: Передаем secret_key и algorithm
+2024-11-01 15:32:24,699 - db/dao.py - find_one_or_none_by_id [Работа с БД]: Поиск и возврат одного экземпляра модели по data_id: 8 или None
+2024-11-01 15:32:24,701 - user/dependencies.py - get_current_user[Аутентификация]: Получаем данные о пользователе с ID: 8
+2024-11-01 15:32:24,701 - user/router.py - logout_user[Выход из системы]: Куки пользователя: Raaaaa, ID: 8 удалены
+2024-11-01 15:32:31,988 - user/router.py - register_user[Регистрация]: Попытка регистрации юзера
+2024-11-01 15:32:31,988 - db/dao.py - find_one_or_none [Работа с БД]: Поиск и возврат одного экземпляра модели по переданному параметру {'email': 'raaa1a@mail.ru'} или None
+2024-11-01 15:32:31,990 - user/auth.py - get_password_hash[Работа с БД]: Вызов функции
+2024-11-01 15:32:32,203 - db/dao.py - add[Работа с БД]: Запись {'email': 'raaa1a@mail.ru', 'name': 'gehehseh', 'password': '$2b$12$Bz8ruTmZ9SMXtm5KlTsrq.RcdHv9sECT74p0lFyhA0uppunJiXEGW'} была добавлена в БД
+2024-11-01 15:32:32,203 - user/router.py - register_user[Регистрация]: Пользователь: email='raaa1a@mail.ru' name='gehehseh' password='Password1!' успешно зарегистрирован
+2024-11-01 15:32:32,225 - Переход на страницу /chat
